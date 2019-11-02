@@ -390,6 +390,9 @@ def train(model_class=None,
                         feed_dict=feed_dict)
                     one_epoch_ndcg_vad.append(vad_true_ndcg)
                     one_epoch_score.append(vad_true_evaluation_metric)
+                    print('one epoch score')
+                    print(one_epoch_score)
+                    print(vad_true_evaluation_metric)
                     one_epoch_critic_error.append(vad_critic_error)
                     """Another way of doing it END"""
 
