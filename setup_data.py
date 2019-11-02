@@ -224,7 +224,7 @@ def process_unzipped_data(DATA_DIR,
         else:
             print("pro_sg dir already exists. Exiting.")
             return
-    raw_data = pd.read_csv(os.path.join(DATA_DIR, 'rating.csv'), engine='python',delimiter='\t', header=0)
+    raw_data = pd.read_csv(os.path.join(DATA_DIR, 'rating.csv'), engine='python',sep='\t', header=0)
     print(raw_data)
 
 
@@ -367,7 +367,7 @@ def process_unzipped_data(DATA_DIR,
             if i % 1000 == 0:
                 print("%d users sampled" % i)
                 sys.stdout.flush()
-
+        print(tr_list)
         data_tr = pd.concat(tr_list)
         data_te = pd.concat(te_list)
 
