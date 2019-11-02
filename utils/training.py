@@ -172,7 +172,7 @@ def _print(toprint, verbose):
 
 
 def train(model_class=None,
-          data_subdir='ml-20m',
+          data_subdir='ml-100k',
           evaluation_metric='NDCG',
           n_epochs_pred_only=0,
           n_epochs_ac_only=0,
@@ -206,7 +206,7 @@ def train(model_class=None,
     #     tf.set_random_seed(tf_random_seed)
     #     print('tf random seed set to {}'.format(tf_random_seed))
 
-    assert data_subdir in ['ml-20m', 'netflix-prize', 'msd']
+    assert data_subdir in ['ml-100k', 'netflix-prize', 'msd']
     assert model_class in ['multi_vae', 'warp_encoder', 'wmf', 'new_multi_dae', 'variational_wmf', 'gaussian_vae', 'phase_4_warp', 'lambdarank_actor', 'phase_4_lambdarank']
 
     train_args = locals()
@@ -587,7 +587,7 @@ def train(model_class=None,
 
 def test(
         model_class=None,
-        data_subdir='ml-20m',
+        data_subdir='ml-100k',
         evaluation_metric='NDCG',
         n_epochs_pred_only=0,
         n_epochs_ac_only=0,
@@ -611,7 +611,7 @@ def test(
         omit_num_unseen_from_critic=False,
         version_tag=""):
 
-    assert data_subdir in ['ml-20m', 'netflix-prize', 'msd']
+    assert data_subdir in ['ml-100k', 'netflix-prize', 'msd']
     assert model_class in ['multi_vae', 'warp_encoder', 'wmf', 'new_multi_dae', 'variational_wmf', 'gaussian_vae', 'phase_4_warp', 'lambdarank_actor', 'phase_4_lambdarank']
 
     train_args = locals()
