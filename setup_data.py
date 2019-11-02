@@ -224,7 +224,7 @@ def process_unzipped_data(DATA_DIR,
         else:
             print("pro_sg dir already exists. Exiting.")
             return
-    raw_data = pd.read_csv(os.path.join(DATA_DIR, 'rating.csv'), engine='python', header=0)
+    raw_data = pd.read_csv(os.path.join(DATA_DIR, 'rating.csv'), engine='python',delimiter='\t', header=0)
     print(raw_data)
 
 
