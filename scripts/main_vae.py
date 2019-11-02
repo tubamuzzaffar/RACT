@@ -15,7 +15,7 @@ if __name__ == '__main__':
         train(
             model_class='multi_vae',
             data_subdir=data_subdir,
-            n_epochs_pred_only=100,
+            n_epochs_pred_only=20,
             n_epochs_ac_only=0,
             n_epochs_pred_and_ac=0,
             max_kl=0.2,
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         test(
             model_class='multi_vae',
             data_subdir=data_subdir,
-            n_epochs_pred_only=100,
+            n_epochs_pred_only=20,
             n_epochs_ac_only=0,
             n_epochs_pred_and_ac=0,
             max_kl=0.2,
