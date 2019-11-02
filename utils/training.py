@@ -285,7 +285,6 @@ def train(model_class=None,
             try:
                 sess.run(training_init_op)
                 print("initialized training.")
-                print(bnum)
                 bnum = 0
                 while True:
                     batches_seen += 1
