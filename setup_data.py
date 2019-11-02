@@ -458,8 +458,8 @@ if __name__ == '__main__':
 
     if dataset == 'ml-100k' or dataset == 'all':
         print("Doing ml-100k stuff!")
-        maybe_download_and_extract_movie_data("./data", force_overwrite=force_overwrite)
-        process_unzipped_data('./data/ml-100k', force_overwrite=force_overwrite)
+        maybe_download_and_extract_movie_data("./data")
+        process_unzipped_data('./data/ml-100k')
 
     if dataset == 'netflix-prize' or dataset == 'all':
         print("Doing netflix-prize stuff!")
