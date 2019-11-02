@@ -349,7 +349,7 @@ def process_unzipped_data(DATA_DIR,
         data_grouped_by_user = data.groupby('userId')
         tr_list, te_list = list(), list()
 
-        np.random.seed(98765)
+        np.random.seed(1234)
 
         for i, (_, group) in enumerate(data_grouped_by_user):
             n_items_u = len(group)
