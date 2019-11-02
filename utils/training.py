@@ -178,9 +178,9 @@ def train(model_class=None,
           n_epochs_ac_only=0,
           n_epochs_pred_and_ac=0,
           n_epochs_second_pred=0,
-          batch_size=500,
+          batch_size=100,
           break_early=False,
-          batches_to_anneal_over=200000,
+          batches_to_anneal_over=1000,
           min_kl=0.0,
           max_kl=0.2,
           epochs_to_anneal_over=50,
@@ -215,8 +215,8 @@ def train(model_class=None,
         'log_critic_training_error'
     ], **train_args)
 
-    np.random.seed(98765)
-    tf.set_random_seed(98765)
+    np.random.seed(1234)
+    tf.set_random_seed(1234)
     n_epochs = n_epochs_pred_only + n_epochs_ac_only + n_epochs_pred_and_ac + n_epochs_second_pred
 
     tf.reset_default_graph()
@@ -593,12 +593,12 @@ def test(
         n_epochs_ac_only=0,
         n_epochs_pred_and_ac=0,
         n_epochs_second_pred=0,
-        batch_size=500,
+        batch_size=100,
         break_early=False,
         min_kl=0.0,
         max_kl=0.2,
         epochs_to_anneal_over=50,
-        batches_to_anneal_over=200000,
+        batches_to_anneal_over=1000,
         #   logging_frequency=25,
         #   path_to_save_actor=None,
         #   path_to_save_last_actor=None,
@@ -621,8 +621,8 @@ def test(
 
     chkpt_dir = make_checkpoint_dir(arch_str)
 
-    np.random.seed(98765)
-    tf.set_random_seed(98765)
+    np.random.seed(1234)
+    tf.set_random_seed(1234)
 
     tf.reset_default_graph()
 
@@ -687,9 +687,6 @@ def test(
                     Recall_at_k_batch(pred_val, heldout_batch, k=50, input_batch=batch_of_users))
                 recall20_list.append(
                     Recall_at_k_batch(pred_val, heldout_batch, k=20, input_batch=batch_of_users))
-                ndcg200_list.append(
-                    NDCG_binary_at_k_batch(
-                        pred_val, heldout_batch, k=200, input_batch=batch_of_users))
                 ndcg5_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=5, input_batch=batch_of_users))
@@ -742,8 +739,6 @@ def test(
     print("Test Recall@020=%.5f (%.5f)" % (np.mean(recall20_list),
                                            np.std(recall20_list) / np.sqrt(len(recall20_list))))
 
-    print("Test NDCG@0200=%.5f (%.5f)" % (np.mean(ndcg200_list),
-                                           np.std(ndcg200_list) / np.sqrt(len(ndcg200_list))))
     print("Test NDCG@5=%.5f (%.5f)" % (np.mean(ndcg5_list),
                                            np.std(ndcg5_list) / np.sqrt(len(ndcg5_list))))
     print("Test NDCG@3=%.5f (%.5f)" % (np.mean(ndcg3_list),
@@ -763,8 +758,6 @@ def test(
         f.write("Test Recall@20=%.5f (%.5f)\n" %
                 (np.mean(recall20_list), np.std(recall20_list) / np.sqrt(len(recall20_list))))
 
-        f.write("Test NDCG@0200=%.5f (%.5f)\n" % (np.mean(ndcg200_list),
-                                            np.std(ndcg200_list) / np.sqrt(len(ndcg200_list))))
         f.write("Test NDCG@5=%.5f (%.5f)\n" % (np.mean(ndcg5_list),
                                             np.std(ndcg5_list) / np.sqrt(len(ndcg5_list))))
         f.write("Test NDCG@3=%.5f (%.5f)\n" % (np.mean(ndcg3_list),
