@@ -675,7 +675,7 @@ def test(
     dcg100_list = []
 
     with tf.Session() as sess:
-        model.saver.restore(sess, '{}/model'.format(chkpt_dir))
+        model.saver.restore(sess, './model'.format(chkpt_dir))
         sess.run(testing_init_op)
         try:
             # for bnum, st_idx in enumerate(range(0, N_test, batch_size_test)):
@@ -702,16 +702,6 @@ def test(
                     [model.prediction, model.batch_of_users, model.heldout_batch],
                     feed_dict=feed_dict)
 
-                ndcg100_list.append(
-                    NDCG_binary_at_k_batch(
-                        pred_val, heldout_batch, k=100, input_batch=batch_of_users))
-                recall50_list.append(
-                    Recall_at_k_batch(pred_val, heldout_batch, k=50, input_batch=batch_of_users))
-                recall20_list.append(
-                    Recall_at_k_batch(pred_val, heldout_batch, k=20, input_batch=batch_of_users))
-                ndcg5_list.append(
-                    NDCG_binary_at_k_batch(
-                        pred_val, heldout_batch, k=5, input_batch=batch_of_users))
                 ndcg3_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
@@ -719,9 +709,6 @@ def test(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=1, input_batch=batch_of_users))
                 
-                dcg100_list.append(
-                    NDCG_binary_at_k_batch(
-                        pred_val, heldout_batch, k=100, input_batch=batch_of_users, normalize=False))
 
                 # recall50_list.append(Recall_at_k_batch())
 
@@ -747,22 +734,12 @@ def test(
         except tf.errors.OutOfRangeError:
             print("Testing done. That broke it out of the loop.")
 
-    ndcg100_list = np.concatenate(ndcg100_list)
+    #ndcg100_list = np.concatenate(ndcg100_list)
     # ap100_list = np.concatenate(ap100_list)
     # recall100_list = np.concatenate(recall100_list)
 
     # In[64]:
-    print("Test UNNORMALIZED DCG@100=%.5f (%.5f)" % (np.mean(dcg100_list),
-                                         np.std(dcg100_list) / np.sqrt(len(dcg100_list))))
-    print("Test NDCG@100=%.5f (%.5f)" % (np.mean(ndcg100_list),
-                                         np.std(ndcg100_list) / np.sqrt(len(ndcg100_list))))
-    print("Test Recall@50=%.5f (%.5f)" % (np.mean(recall50_list),
-                                          np.std(recall50_list) / np.sqrt(len(recall50_list))))
-    print("Test Recall@020=%.5f (%.5f)" % (np.mean(recall20_list),
-                                           np.std(recall20_list) / np.sqrt(len(recall20_list))))
 
-    print("Test NDCG@5=%.5f (%.5f)" % (np.mean(ndcg5_list),
-                                           np.std(ndcg5_list) / np.sqrt(len(ndcg5_list))))
     print("Test NDCG@3=%.5f (%.5f)" % (np.mean(ndcg3_list),
                                            np.std(ndcg3_list) / np.sqrt(len(ndcg3_list))))
     print("Test NDCG@1=%.5f (%.5f)" % (np.mean(ndcg1_list),
@@ -773,15 +750,7 @@ def test(
     with open("../TEST_RESULTS.txt", "a") as f:
         f.write("\n\n")
         f.write(json.dumps(train_args) + "\n")
-        f.write("Test NDCG@100=%.5f (%.5f)\n" % (np.mean(ndcg100_list),
-                                                 np.std(ndcg100_list) / np.sqrt(len(ndcg100_list))))
-        f.write("Test Recall@50=%.5f (%.5f)\n" %
-                (np.mean(recall50_list), np.std(recall50_list) / np.sqrt(len(recall50_list))))
-        f.write("Test Recall@20=%.5f (%.5f)\n" %
-                (np.mean(recall20_list), np.std(recall20_list) / np.sqrt(len(recall20_list))))
-
-        f.write("Test NDCG@5=%.5f (%.5f)\n" % (np.mean(ndcg5_list),
-                                            np.std(ndcg5_list) / np.sqrt(len(ndcg5_list))))
+ 
         f.write("Test NDCG@3=%.5f (%.5f)\n" % (np.mean(ndcg3_list),
                                             np.std(ndcg3_list) / np.sqrt(len(ndcg3_list))))
         f.write("Test NDCG@1=%.5f (%.5f)\n" % (np.mean(ndcg1_list),
