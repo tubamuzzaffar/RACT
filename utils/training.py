@@ -277,7 +277,7 @@ def train(model_class=None,
 
         batches_seen = 0
         for epoch in range(n_epochs):
-          print(epoch)
+            print(epoch)
             if log_critic_training_error:
                 training_critic_error = []
             training_phase = None
