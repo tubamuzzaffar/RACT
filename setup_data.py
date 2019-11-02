@@ -211,7 +211,7 @@ def load_tr_te_data(csv_file_tr, csv_file_te):
 
 def process_unzipped_data(DATA_DIR,
                           force_overwrite=False,
-                          n_heldout_users=10000,
+                          n_heldout_users=1000,
                           discard_ratings_below=3.5,
                           min_users_per_item_to_include=0,
                           min_clicks_per_user_to_include=5):
@@ -361,6 +361,7 @@ def process_unzipped_data(DATA_DIR,
 
                 tr_list.append(group[np.logical_not(idx)])
                 te_list.append(group[idx])
+                print(tr_list)
             else:
                 tr_list.append(group)
 
@@ -378,8 +379,11 @@ def process_unzipped_data(DATA_DIR,
 
 
     vad_plays = raw_data.loc[raw_data['userId'].isin(vd_users)]
+    print("userID")
+    print(vad_plays)
     vad_plays = vad_plays.loc[vad_plays['movieId'].isin(unique_sid)]
-
+    print("movieId")
+    print(vad_plays)
 
     # In[18]:
 
