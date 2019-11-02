@@ -19,8 +19,8 @@ def save_zip_data(write_path, zip_url):
         f.write(zip_file)
 
 def maybe_download_and_extract_movie_data(data_dir, force_overwrite=False):
-    write_path = os.path.join(data_dir, 'ml-20m.zip')
-    zip_url = "http://files.grouplens.org/datasets/movielens/ml-20m.zip"
+    write_path = os.path.join(data_dir, 'ml-100k.zip')
+    zip_url = "http://files.grouplens.org/datasets/movielens/ml-100k.zip"
     if not os.path.isfile(write_path):
         os.makedirs(data_dir, exist_ok=True)
         print("Zip not downloaded. Downloading now...")
@@ -29,7 +29,7 @@ def maybe_download_and_extract_movie_data(data_dir, force_overwrite=False):
     else:
         print("Zip already downloaded")
 
-    extract_destination = os.path.join(data_dir, "ml-20m")
+    extract_destination = os.path.join(data_dir, "ml-100k")
     if os.path.isdir(extract_destination):
         if not force_overwrite:
             print("seems extracted datadir already exists, and not forcing overwrite. Exiting.")
@@ -41,9 +41,9 @@ def maybe_download_and_extract_movie_data(data_dir, force_overwrite=False):
     with zipfile.ZipFile(write_path, 'r') as zip_ref:
         zip_ref.extractall(extract_destination)
 
-    current_dir = os.path.join(data_dir, 'ml-20m', 'ml-20m')
-    temp_dir = os.path.join(data_dir, 'ml-20m-temp')
-    right_dir = os.path.join(data_dir, 'ml-20m')
+    current_dir = os.path.join(data_dir, 'ml-100k', 'ml-100k')
+    temp_dir = os.path.join(data_dir, 'ml-100k-temp')
+    right_dir = os.path.join(data_dir, 'ml-100k')
 
     print("Moving stuff where it should be")
     shutil.move(current_dir, temp_dir)
@@ -449,17 +449,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # parser.add_argument("--use-noise-morpher", help="Whether to use noise-morphing or not. Defaults to True.", type=lambda x:bool(distutils.util.strtobool(x)), default=defaults["use_noise_morpher"])
     parser.add_argument("--force-overwrite", help="Re-download, extract, and parse data", type=lambda x:bool(distutils.util.strtobool(x)), default=False)
-    parser.add_argument("--dataset", help="Which dataset do you want?", type=str, default='ml-20m')
+    parser.add_argument("--dataset", help="Which dataset do you want?", type=str, default='ml-100k')
     args = parser.parse_args()
 
     force_overwrite = args.force_overwrite
     dataset = args.dataset
-    assert dataset in ['ml-20m', 'netflix-prize', 'msd', 'all']
+    assert dataset in ['ml-100k', 'netflix-prize', 'msd', 'all']
 
-    if dataset == 'ml-20m' or dataset == 'all':
-        print("Doing ml-20m stuff!")
+    if dataset == 'ml-100k' or dataset == 'all':
+        print("Doing ml-100k stuff!")
         maybe_download_and_extract_movie_data("./data", force_overwrite=force_overwrite)
-        process_unzipped_data('./data/ml-20m', force_overwrite=force_overwrite)
+        process_unzipped_data('./data/ml-100k', force_overwrite=force_overwrite)
 
     if dataset == 'netflix-prize' or dataset == 'all':
         print("Doing netflix-prize stuff!")
