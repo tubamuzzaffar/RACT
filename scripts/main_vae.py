@@ -8,7 +8,7 @@ from training import train, test
 if __name__ == '__main__':
 
     BREAK_EARLY = False
-    BATCH_SIZE = 100
+    BATCH_SIZE = 3
 
     for data_subdir in ['ml-100k', 'netflix-prize', 'msd']:
         actor_path = "VAE_ACTOR_TRAIN_{}".format(data_subdir)
