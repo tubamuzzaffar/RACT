@@ -277,6 +277,7 @@ def train(model_class=None,
 
         batches_seen = 0
         for epoch in range(n_epochs):
+          print(epoch)
             if log_critic_training_error:
                 training_critic_error = []
             training_phase = None
@@ -284,6 +285,7 @@ def train(model_class=None,
             try:
                 sess.run(training_init_op)
                 print("initialized training.")
+                print(bnum)
                 bnum = 0
                 while True:
                     batches_seen += 1
