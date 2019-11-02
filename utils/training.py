@@ -287,17 +287,20 @@ def train(model_class=None,
                 sess.run(training_init_op)
                 print("initialized training.")
                 bnum = 0
-                while True:
+                while True: 
+                    print('1')
                     batches_seen += 1
                     bnum += 1
                     _print(bnum, verbose)
+                    print('2')
                     if break_early:
                         if bnum >= 25:
                             print('breaking early')
                             break
-
+                    print('3')
                     kl_scaler = calc_kl_scaler_by_batch(batches_seen, min_kl, max_kl,
                                                         batches_to_anneal_over)
+                    print('4')
                     feed_dict = {  #model.input_ph: X, #TODO: THESE WILL CHANGE...
                         model.keep_prob_ph: 0.5,
                         model.kl_loss_scaler: kl_scaler,
@@ -306,18 +309,20 @@ def train(model_class=None,
                         model.train_batch_norm: False,  #Even though it's the default...
                         model.epoch: epoch,
                     }
-
+                    print('5')
                     to_run = {}
-
+                    print('6')
                     if log_critic_training_error:
                         to_run['training_critic_error'] = model.critic_error
 
                     t = time.time()
                     if epoch < n_epochs_pred_only:
+                        print('7')
                         training_phase = "ACTOR"
                         feed_dict[model.train_batch_norm] = True
                         to_run['_'] = model.actor_train_op
                         sess_return = sess.run(to_run, feed_dict=feed_dict)
+                        print('8')
                         _print(
                             "Time taken for n_epochs_pred_only batch: {}".format(time.time() - t),
                             verbose)
