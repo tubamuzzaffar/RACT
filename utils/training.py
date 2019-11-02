@@ -89,7 +89,7 @@ def make_arch_string(ordered_arg_names=[], args_to_ignore=[], **kwargs):
 
     all_folders = starting_args + remaining_folder_names
     folder = os.path.join(*all_folders)
-
+    print(folder)
     return folder
 
 
@@ -187,7 +187,7 @@ def train(model_class=None,
           min_kl=0.0,
           max_kl=0.2,
           epochs_to_anneal_over=25,
-          logging_frequency=5,
+          logging_frequency=2,
           path_to_save_actor=None,
           path_to_save_last_actor=None,
           restore_trained_actor_path=None,
@@ -670,12 +670,10 @@ def test(
 
     # ndcg100_list, ap100_list, recall100_list = [], [], []
     # ndcg100_list, recall50_list, recall20_list = [], [], []
-    ndcg100_list, recall50_list, recall20_list, ndcg200_list, ndcg5_list, ndcg3_list, ndcg1_list = [], [], [], [], [], [], []
-
-    dcg100_list = []
+     ndcg3_list, ndcg1_list = [], [], [], [], [], [], []
 
     with tf.Session() as sess:
-        model.saver.restore(sess, './model'.format(chkpt_dir))
+        model.saver.restore(sess, '{}/model'.format(chkpt_dir))
         sess.run(testing_init_op)
         try:
             # for bnum, st_idx in enumerate(range(0, N_test, batch_size_test)):
@@ -710,27 +708,7 @@ def test(
                         pred_val, heldout_batch, k=1, input_batch=batch_of_users))
                 
 
-                # recall50_list.append(Recall_at_k_batch())
-
-                # pred_val, heldout_batch, _ = sess.run(
-                #     [model.vad_logits_out, model.heldout_batch, model.true_vad_ndcg],
-                #     feed_dict=feed_dict)
-
-                # ndcg100, ap100, recall100 = sess.run(
-                #     [model.vad_true_ndcg, model.vad_true_ap, model.vad_true_recall],
-                #     feed_dict=feed_dict)
-
-                # NOTE: I don't know why you need to fetch the true_ndcg_vad. Maybe it's something about
-                # graph_replace, that you need to get all of them together?
-                # pred_val = sess.run(model.logits_out, feed_dict=feed_dict)
-                # pred_val[X.nonzero()] = -np.inf
-                # ndcg100_list.append(ndcg100)
-                # ap100_list.append(ap100)
-                # recall100_list.append(recall100)
-
-                # n100_list.append(NDCG_binary_at_k_batch(pred_val, test_data_te[idxlist_test[st_idx:end_idx]], k=100))
-                # r20_list.append(Recall_at_k_batch(pred_val, test_data_te[idxlist_test[st_idx:end_idx]], k=20))
-                # r50_list.append(Recall_at_k_batch(pred_val, test_data_te[idxlist_test[st_idx:end_idx]], k=50))
+               
         except tf.errors.OutOfRangeError:
             print("Testing done. That broke it out of the loop.")
 
