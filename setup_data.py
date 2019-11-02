@@ -211,8 +211,8 @@ def load_tr_te_data(csv_file_tr, csv_file_te):
 
 def process_unzipped_data(DATA_DIR,
                           force_overwrite=False,
-                          n_heldout_users=1000,
-                          discard_ratings_below=3.5,
+                          n_heldout_users=68,
+                          discard_ratings_below=4,
                           min_users_per_item_to_include=0,
                           min_clicks_per_user_to_include=5):
 
@@ -227,13 +227,12 @@ def process_unzipped_data(DATA_DIR,
     raw_data = pd.read_csv(os.path.join(DATA_DIR, 'rating.csv'), engine='python',header=0)
     print(raw_data)
 
-
     # In[4]:
 
-
-    # binarize the data (only keep ratings >= 4)
+    # binarize the data (only keep ratings >= 5)
     raw_data = raw_data[raw_data['rating'] > discard_ratings_below]
-
+    print('2')
+    print(raw_data)
 
     # ### Data splitting procedure
 
@@ -258,13 +257,13 @@ def process_unzipped_data(DATA_DIR,
         if min_sc > 0:
             itemcount = get_count(tp, 'movieId')
             tp = tp[tp['movieId'].isin(itemcount.index[itemcount >= min_sc])]
-
+            print(tp)
         # Only keep the triplets for users who clicked on at least min_uc items
         # After doing this, some of the items will have less than min_uc users, but should only be a small proportion
         if min_uc > 0:
             usercount = get_count(tp, 'userId')
             tp = tp[tp['userId'].isin(usercount.index[usercount >= min_uc])]
-
+            print(tp)
         # Update both usercount and itemcount after filtering
         usercount, itemcount = get_count(tp, 'userId'), get_count(tp, 'movieId')
         return tp, usercount, itemcount
@@ -295,7 +294,7 @@ def process_unzipped_data(DATA_DIR,
 
     unique_uid = user_activity.index
 
-    np.random.seed(98765)
+    np.random.seed(1234)
     idx_perm = np.random.permutation(unique_uid.size)
     unique_uid = unique_uid[idx_perm]
 
