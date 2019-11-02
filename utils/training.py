@@ -351,6 +351,7 @@ def train(model_class=None,
                         training_critic_error.append(sess_return['training_critic_error'])
 
                     if batches_seen % logging_frequency == 0:
+                        print('9')
                         t = time.time()
                         print("Logging for batch {}".format(bnum))
                         # print("Logging for batch {}. KL Scalar: {}.".format(bnum, kl_scaler))
