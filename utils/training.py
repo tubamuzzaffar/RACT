@@ -13,8 +13,8 @@ import pandas as pd
 
 import tensorflow as tf
 
-np.random.seed(98765)
-tf.set_random_seed(98765)
+np.random.seed(1234)
+tf.set_random_seed(1234)
 
 # from tensorflow.python import debug as tf_debug
 
@@ -187,7 +187,7 @@ def train(model_class=None,
           min_kl=0.0,
           max_kl=0.2,
           epochs_to_anneal_over=50,
-          logging_frequency=25,
+          logging_frequency=5,
           path_to_save_actor=None,
           path_to_save_last_actor=None,
           restore_trained_actor_path=None,
@@ -241,7 +241,8 @@ def train(model_class=None,
     print(validation_dataset)
     data_iterator = tf.data.Iterator.from_structure(training_dataset.output_types,
                                                     training_dataset.output_shapes)
-
+    print('dataaa')
+    print(data_iterator)
     batch_of_users, heldout_batch = data_iterator.get_next()
 
     training_init_op = data_iterator.make_initializer(training_dataset)
