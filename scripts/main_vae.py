@@ -8,7 +8,7 @@ from training import train, test
 if __name__ == '__main__':
 
     BREAK_EARLY = False
-    BATCH_SIZE = 500
+    BATCH_SIZE = 100
 
     for data_subdir in ['ml-100k', 'netflix-prize', 'msd']:
         actor_path = "VAE_ACTOR_TRAIN_{}".format(data_subdir)
@@ -28,7 +28,7 @@ if __name__ == '__main__':
             verbose=False,
             version_tag="FULL_RUN_ON_OTHER_DATASETS",
             path_to_save_actor=actor_path,
-            log_critic_training_error=False,
+            log_critic_training_error=True,
         )
 
         print("Now, hopefully on to testing...")
