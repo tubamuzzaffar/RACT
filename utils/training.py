@@ -50,6 +50,9 @@ def get_data(data_subdir):
     vad_data_tr, vad_data_te = load_tr_te_data(
         os.path.join(pro_dir, 'validation_tr.csv'), os.path.join(pro_dir, 'validation_te.csv'),
         n_items)
+    print('1')
+    print(vad_data_tr)
+    print(vad_data_te)
     return {
         'n_items': n_items,
         'train_data': train_data,
@@ -205,7 +208,7 @@ def train(model_class=None,
     #     print("Setting tf random seed to something different, so we can get a mean/std")
     #     tf.set_random_seed(tf_random_seed)
     #     print('tf random seed set to {}'.format(tf_random_seed))
-
+    print('A')
     assert data_subdir in ['ml-100k', 'netflix-prize', 'msd']
     assert model_class in ['multi_vae', 'warp_encoder', 'wmf', 'new_multi_dae', 'variational_wmf', 'gaussian_vae', 'phase_4_warp', 'lambdarank_actor', 'phase_4_lambdarank']
 
@@ -218,7 +221,7 @@ def train(model_class=None,
     np.random.seed(1234)
     tf.set_random_seed(1234)
     n_epochs = n_epochs_pred_only + n_epochs_ac_only + n_epochs_pred_and_ac + n_epochs_second_pred
-
+    print(n_epochs)
     tf.reset_default_graph()
 
     data_dict = get_data(data_subdir)
@@ -226,7 +229,7 @@ def train(model_class=None,
     train_data = data_dict['train_data']
     vad_data_tr = data_dict['vad_data_tr']
     vad_data_te = data_dict['vad_data_te']
-
+    print('B')
     training_dataset = train_dataset(train_data, batch_size)
     validation_dataset = tr_te_dataset(vad_data_tr, vad_data_te, batch_size)
 
@@ -243,11 +246,11 @@ def train(model_class=None,
 
     summary_writer = make_summary_writer(arch_str)
     chkpt_dir = make_checkpoint_dir(arch_str)
-
+    print('C')
     # ndcg_vad_var, ap_vad_var, recall_vad_var, critic_error_vad_var, validation_logging = make_validation_logging(
     # )
     validation_ops = make_validation_logging()
-
+    print('D')
     plot_data_obj = {}
 
     with tf.Session() as sess:
@@ -257,6 +260,7 @@ def train(model_class=None,
             # init = tf.variables_initializer(model.non_actor_restore_variables)
             non_actor_variables = set(tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)).difference(model.actor_restore_variables)
             init = tf.variables_initializer(non_actor_variables)
+            print('E')
             # init = tf.variables_initializer( tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES).difference())
             sess.run(init)
         else:
