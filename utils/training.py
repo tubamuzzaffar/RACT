@@ -231,9 +231,13 @@ def train(model_class=None,
     vad_data_te = data_dict['vad_data_te']
     print('B')
     print(vad_data_tr)
-    print(val_data_te)
+    print(vad_data_te)
     training_dataset = train_dataset(train_data, batch_size)
+    print('train')
+    print(training_dataset)
     validation_dataset = tr_te_dataset(vad_data_tr, vad_data_te, batch_size)
+    print('val')
+    print(validation_dataset)
     print(validation_dataset)
     data_iterator = tf.data.Iterator.from_structure(training_dataset.output_types,
                                                     training_dataset.output_shapes)
@@ -356,6 +360,7 @@ def train(model_class=None,
             print("On to validaiton...")
             try:
                 sess.run(validation_init_op)
+                print('YESSSSS')
                 bnum = 0
                 # one_epoch_ndcg_vad, one_epoch_recall50_vad, one_epoch_recall20_vad, one_epoch_critic_error = [], [], [], []
                 # one_epoch_ndcg_vad, one_epoch_critic_error = [], []
