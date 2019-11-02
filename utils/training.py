@@ -670,7 +670,7 @@ def test(
 
     # ndcg100_list, ap100_list, recall100_list = [], [], []
     # ndcg100_list, recall50_list, recall20_list = [], [], []
-     ndcg3_list, ndcg1_list = [], [], [], [], [], [], []
+    ndcg3_list, ndcg1_list = [], [], [], [], [], [], []
 
     with tf.Session() as sess:
         model.saver.restore(sess, '{}/model'.format(chkpt_dir))
