@@ -682,7 +682,7 @@ def test(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
                 ndcg1_list.append(
-                    NDCG_binary_at_k_batc==
+                    NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=1, input_batch=batch_of_users))
                 
 
