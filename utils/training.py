@@ -589,6 +589,8 @@ def train(model_class=None,
                 print("new best on metric {}. Was {}, now {}. Saving".format(
                     evaluation_metric, best_score, score))
                 model.saver.save(sess, '{}/model'.format(chkpt_dir))
+                print('{}/model'.format(chkpt_dir)) 
+                print('PATHWAY')
                 best_score = score
                 if path_to_save_actor is not None:
                     print("Saving actor as well.")
