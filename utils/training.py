@@ -621,7 +621,7 @@ def test(
         break_early=False,
         min_kl=0.0,
         max_kl=0.2,
-        epochs_to_anneal_over=50,
+        epochs_to_anneal_over=25,
         batches_to_anneal_over=1000,
         #   logging_frequency=25,
         #   path_to_save_actor=None,
