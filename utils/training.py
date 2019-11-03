@@ -701,7 +701,11 @@ def test(
                 pred_val, batch_of_users, heldout_batch = sess.run(
                     [model.prediction, model.batch_of_users, model.heldout_batch],
                     feed_dict=feed_dict)
-
+                
+                print('calculating RMSE')
+                rmse = tf.sqrt(tf.reduce_mean((pred_value - heldout_batch) **2))
+                print(rmse)
+                
                 ndcg3_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
