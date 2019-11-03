@@ -288,19 +288,19 @@ def train(model_class=None,
                 print("initialized training.")
                 bnum = 0
                 while True: 
-                    print('1')
+
                     batches_seen += 1
                     bnum += 1
                     _print(bnum, verbose)
-                    print('2')
+
                     if break_early:
                         if bnum >= 25:
                             print('breaking early')
                             break
-                    print('3')
+
                     kl_scaler = calc_kl_scaler_by_batch(batches_seen, min_kl, max_kl,
                                                         batches_to_anneal_over)
-                    print('4')
+
                     feed_dict = {  #model.input_ph: X, #TODO: THESE WILL CHANGE...
                         model.keep_prob_ph: 0.5,
                         model.kl_loss_scaler: kl_scaler,
@@ -309,20 +309,20 @@ def train(model_class=None,
                         model.train_batch_norm: False,  #Even though it's the default...
                         model.epoch: epoch,
                     }
-                    print('5')
+
                     to_run = {}
-                    print('6')
+
                     if log_critic_training_error:
                         to_run['training_critic_error'] = model.critic_error
 
                     t = time.time()
                     if epoch < n_epochs_pred_only:
-                        print('7')
+
                         training_phase = "ACTOR"
                         feed_dict[model.train_batch_norm] = True
                         to_run['_'] = model.actor_train_op
                         sess_return = sess.run(to_run, feed_dict=feed_dict)
-                        print('8')
+
                         _print(
                             "Time taken for n_epochs_pred_only batch: {}".format(time.time() - t),
                             verbose)
@@ -351,7 +351,7 @@ def train(model_class=None,
                         training_critic_error.append(sess_return['training_critic_error'])
 
                     if batches_seen % logging_frequency == 0:
-                        print('9')
+
                         t = time.time()
                         print("Logging for batch {}".format(bnum))
                         # print("Logging for batch {}. KL Scalar: {}.".format(bnum, kl_scaler))
@@ -409,8 +409,7 @@ def train(model_class=None,
                         feed_dict=feed_dict)
                     one_epoch_ndcg_vad.append(vad_true_ndcg)
                     one_epoch_score.append(vad_true_evaluation_metric)
-                    print('one epoch score')
-                    print(one_epoch_score)
+
                     print(vad_true_evaluation_metric)
                     one_epoch_critic_error.append(vad_critic_error)
                     """Another way of doing it END"""
@@ -584,7 +583,8 @@ def train(model_class=None,
             #     raise Exception("Should not get here.")
 
             score = one_epoch_score
-
+            print(score)
+            print(best_score)
             if score > best_score:
                 print("new best on metric {}. Was {}, now {}. Saving".format(
                     evaluation_metric, best_score, score))
