@@ -673,14 +673,9 @@ def test(
                 
                 print('calculating RMSE')
                 
-                rmse = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,batch_of_users)))
-                rmse2 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,testing_dataset)))
-                rmse3 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,test_tr)))
-                rmse4 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,test_te)))
+                rmse = tf.sqrt(tf.reduce_sum(pred_val,heldout_batch)/batch_size)
                 print(rmse)
-                print(rmse2)
-                print(rmse3)
-                print(rmse4)                                                       
+                                                                   
                 ndcg3_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
