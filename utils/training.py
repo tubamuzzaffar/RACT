@@ -676,7 +676,7 @@ def test(
                 rmse = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,batch_of_users)))
                 rmse2 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,testing_dataset)))
                 rmse3 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,test_tr)))
-                rmse4 = sess.run(tf.sqrt(tf.losses.mean_squared_error([pred_val,test_te)))
+                rmse4 = sess.run(tf.sqrt(tf.losses.mean_squared_error(pred_val,test_te)))
                 print(rmse)
                 print(rmse2)
                 print(rmse3)
