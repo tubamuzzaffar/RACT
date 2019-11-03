@@ -674,6 +674,8 @@ def test(
                 print('calculating RMSE')
                 
                 rmse = tf.sqrt(tf.losses.mean_squared_error(pred_val,heldout_batch))
+                print(pred_val)
+                print(heldout_batch)
                 print(sess.run(rmse))
                                                                    
                 ndcg3_list.append(
