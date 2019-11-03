@@ -66,7 +66,7 @@ def tr_te_dataset(data_tr, data_te, batch_size):
     samples_te = tf.data.Dataset.from_tensor_slices(sparse_data_te)
 
     # 10000 might be too big to sample from... Not sure how that's supposed to work with batch anyways.
-    dataset = tf.data.Dataset.zip((samples_tr, samples_te)).shuffle(10000).batch(
+    dataset = tf.data.Dataset.zip((samples_tr, samples_te)).shuffle(100).batch(
         batch_size, drop_remainder=True)
 
     dataset = dataset.map(lambda x, y: (tf.sparse_tensor_to_dense(x), tf.sparse_tensor_to_dense(y)))
@@ -98,7 +98,7 @@ def train_dataset(data_tr, batch_size):
     samples_tr = tf.data.Dataset.from_tensor_slices(sparse_data)
 
 
-    dataset = samples_tr.shuffle(10000).batch(batch_size, drop_remainder=True)#.map(tf.sparse_to_dense)
+    dataset = samples_tr.shuffle(100).batch(batch_size, drop_remainder=True)#.map(tf.sparse_to_dense)
     dataset = dataset.map(tf.sparse_tensor_to_dense)
 
     expected_shape = tf.TensorShape([batch_size, n_items])
