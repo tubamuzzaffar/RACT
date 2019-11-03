@@ -6,6 +6,8 @@ import random
 import time
 from collections import defaultdict
 import json
+from sklearn.metrics import mean_squared_error
+from math import sqrt
 
 import matplotlib.pyplot as plt
 
@@ -438,39 +440,6 @@ def train(model_class=None,
                     """One way of doing it END"""
 
 
-                    # one_epoch_recall50_vad.append(Recall_at_k_batch(pred_val, heldout_batch, k=50, input_batch=batch_of_users))
-                    # one_epoch_recall20_vad.append(Recall_at_k_batch(pred_val, heldout_batch, k=20, input_batch=batch_of_users))
-
-                    # vad_true_ndcg, vad_true_ap, vad_true_recall, vad_critic_error = \
-                    #     sess.run([model.vad_true_ndcg, model.vad_true_ap, model.vad_true_recall, model.vad_critic_error], feed_dict=feed_dict)
-                    #     'vad_true_ndcg': model.vad_true_ndcg,
-                    #     'vad_true_ap': model.vad_true_ap,
-                    #     'vad_true_recall': model.vad_true_recall,
-                    #     'vad_critic_error': model.vad_critic_error,
-
-                    #     'vad_true_ndcg_at_200': model.vad_true_ndcg_at_200,
-                    #     'vad_true_ndcg_at_50': model.vad_true_ndcg_at_50,
-                    #     'vad_true_ndcg_at_20': model.vad_true_ndcg_at_20,
-                    #     'vad_true_ndcg_at_5': model.vad_true_ndcg_at_5,
-                    # }, feed_dict=feed_dict)
-                    # vad_true_ndcg, vad_true_ap, vad_true_recall, vad_critic_error = \
-                    #     sess.run([model.vad_true_ndcg, model.vad_true_ap, model.vad_true_recall, model.vad_critic_error], feed_dict=feed_dict)
-
-                    # one_epoch_ndcg_vad.append(vad_true_ndcg)
-                    # one_epoch_ap_vad.append(vad_true_ap)
-                    # one_epoch_recall_vad.append(vad_true_recall)
-                    # one_epoch_critic_error.append(vad_critic_error)
-
-                    # one_epoch_ndcg_vad.append(validation_results['vad_true_ndcg'])
-                    # one_epoch_ap_vad.append(validation_results['vad_true_ap'])
-                    # one_epoch_recall_vad.append(validation_results['vad_true_recall'])
-                    # one_epoch_critic_error.append(validation_results['vad_critic_error'])
-
-                    # one_epoch_ndcg_at_200_vad.append(validation_results['vad_true_ndcg_at_200'])
-                    # one_epoch_ndcg_at_50_vad.append(validation_results['vad_true_ndcg_at_50'])
-                    # one_epoch_ndcg_at_20_vad.append(validation_results['vad_true_ndcg_at_20'])
-                    # one_epoch_ndcg_at_5_vad.append(validation_results['vad_true_ndcg_at_5'])
-
                     _print("Time to do one vad batch: {}".format(time.time() - t), verbose)
 
             except tf.errors.OutOfRangeError:
@@ -703,9 +672,8 @@ def test(
                     feed_dict=feed_dict)
                 
                 print('calculating RMSE')
-                rmse = tf.sqrt(tf.reduce_mean((pred_val - heldout_batch) **2))
+                rmse = sess.run(tf.sqrt(tf.losses.mean_squared_error([prediction,label])))
                 print(rmse)
-                
                 ndcg3_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
