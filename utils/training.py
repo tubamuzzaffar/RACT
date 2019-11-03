@@ -138,7 +138,7 @@ def make_summary_writer(arch_str):
 
 
 def make_checkpoint_dir(arch_str):
-    chkpt_dir = os.path.join('..', 'checkpoints', arch_str)
+    chkpt_dir = os.path.join('..', 'checkpoint', arch_str)
     if not os.path.isdir(chkpt_dir):
         os.makedirs(chkpt_dir)
     return chkpt_dir
