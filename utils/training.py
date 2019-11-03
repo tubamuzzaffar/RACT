@@ -703,7 +703,7 @@ def test(
                     feed_dict=feed_dict)
                 
                 print('calculating RMSE')
-                rmse = tf.sqrt(tf.reduce_mean((pred_value - heldout_batch) **2))
+                rmse = tf.sqrt(tf.reduce_mean((pred_val - heldout_batch) **2))
                 print(rmse)
                 
                 ndcg3_list.append(
