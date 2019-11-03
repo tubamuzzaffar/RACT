@@ -672,13 +672,17 @@ def test(
                     feed_dict=feed_dict)
                 
                 print('calculating RMSE')
-                rmse = sess.run(tf.sqrt(tf.losses.mean_squared_error([prediction,label])))
+                
+                rmse = sess.run(tf.sqrt(tf.losses.mean_squared_error([pred_val,batch_of_users])))
+                rmse2 = sess.run(tf.sqrt(tf.losses.mean_squared_error([pred_val,testing_dataset])))
+                rmse3 = sess.run(tf.sqrt(tf.losses.mean_squared_error([pred_val,test_tr])))
+                rmse4 = sess.run(tf.sqrt(tf.losses.mean_squared_error([pred_val,test_te])))
                 print(rmse)
                 ndcg3_list.append(
                     NDCG_binary_at_k_batch(
                         pred_val, heldout_batch, k=3, input_batch=batch_of_users))
                 ndcg1_list.append(
-                    NDCG_binary_at_k_batch(
+                    NDCG_binary_at_k_batc==
                         pred_val, heldout_batch, k=1, input_batch=batch_of_users))
                 
 
